@@ -1,0 +1,76 @@
+#
+# ~/.screenrc
+# User dependent GNU Screen config
+#
+
+
+## UI
+
+## Backticks
+# CPU load in percent
+backtick 1 10 10 sh -c "ps aux | awk '{sum+=\$3} END {print sum}'"
+# CPU Temp on BananaPi
+backtick 2 30 30 awk '{printf("%0.1f", $1/1000)}' /sys/devices/platform/soc@01c00000/1c25000.rtp/hwmon/hwmon0/temp1_input
+
+# Informative statusbar, Windows(TM) style!
+#hardstatus alwayslastline '%{=u kw}%H%{-u}: %?%-w%?%{+rb} %n %t %{-}%?%+w%?%=%1`%% @ %2`C  %c ' # Dark
+ hardstatus alwayslastline '%{=u wk}%H%{-u}: %?%-w%?%{+r} %n %t %{-}%?%+w%?%= %1`%% @ %2`C  %c ' # Light
+
+# Set window title to the name of the running program
+# shelltitle syntax: "<prompt-end>|<default-title>"
+shelltitle "> |bash"
+
+# When an activity occurs in any background window,
+# display a notification in message line.
+defmonitor on
+
+
+## General
+
+# Turn welcome message off
+startup_message off
+
+# Disable fullscreen blink
+vbell off
+
+# Change default scrollback value for new windows
+defscrollback 1024
+
+# Fix for residual editor text
+# When you open a text editor like nano in screen and then close it,
+# the text may stay visible in your terminal. Fix this.
+altscreen on
+
+
+## Idle / Lockscreen
+
+# Lock screen after an "idle time" of N seconds
+idle 240 lockscreen
+
+# After "idle timeout" start console screen saver "cmatrix"
+# and (important!) reset the idle mechanism after that.
+#idle 120 eval "screen cmatrix" "idle 0"
+
+
+## Key bindings
+
+# Escaped commands (Ctrl+A + key)
+bind  r colon # as "run"
+bind ^R source .screenrc
+bind  l lockscreen
+bind  N screen 1
+bind ^T screen -ln 10 top
+bind  q stuff "exit\n"
+
+# Keybinding
+# Switch prev/next window with Ctrl+Left/Right arrow
+bindkey "^[[1;5D" prev
+bindkey "^[[1;5C" next
+   
+# Cycle among windows with Ctrl+TAB
+bindkey "^[[1;5I" next
+
+# Other keybindgs
+#bindkey ^N screen
+#bindkey ^T screen -ln 9 top
+

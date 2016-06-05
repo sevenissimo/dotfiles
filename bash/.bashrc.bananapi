@@ -1,0 +1,23 @@
+#
+# ~/.bashrc.bananapi
+# Host dependent .bashrc file
+#
+
+### By default, this file is not read by bash(1). ###
+
+
+## Keybindings
+
+# 'bind -x ... cmd' seems not work in most cases ):
+# Use of "\001\013 + cmd\n + \031" to preserve current line
+
+# Home key change dir to user $HOME
+bind '"\033[1;5H":"\001\013cd\n\031"'
+
+# Media key change to media library dir
+bind '"\033[1;5M":"\001\013cd /hdd/Movies\n\031"'
+
+# Ctrl+A + L (Win+L) lock tty with vlock
+# ** DO NOT USE 'bind -x ... vlock' or you'll be locked out!
+bind '"\001l":"\001\013vlock\n\031"'
+

@@ -1,0 +1,53 @@
+# awk.nanorc
+# Syntax for AWK scripts
+#
+
+syntax "AWK" "\.awk$"
+header "^#!.*bin/(env +)?awk( |$)"
+
+
+# Variables
+color cyan "\$[A-Za-z0-9_!@#$*?-]+"
+
+# Keywords
+color red "\<(ARGC|ARGIND|ARGV|BINMODE|CONVFMT|ENVIRON|ERRNO|FIELDWIDTHS)\>"
+color red "\<(FILENAME|FNR|FS|IGNORECASE|LINT|NF|NR|OFMT|OFS|ORS)\>"
+color red "\<(PROCINFO|RS|RT|RSTART|RLENGTH|SUBSEP|TEXTDOMAIN)\>"
+color red "\<(function|extension|BEGIN|END)\>"
+
+# Symbols
+color red "[-+*/%^|!=&<>?;:]|\\|\[|\]"
+
+# Keywords
+color red  "\<(for|if|while|do|else|in|delete|exit)\>"
+color red  "\<(break|continue|return)\>"
+
+# Functions
+color red "\<(close|getline|next|nextfile|print|printf|system|fflush)\>"
+color red "\<(atan2|cos|exp|int|log|rand|sin|sqrt|srand)\>"
+color red "\<(asort|asorti|gensub|gsub|index|length|match)\>"
+color red "\<(split|sprintf|strtonum|sub|substr|tolower|toupper)\>"
+color red "\<(mktime|strftime|systime)\>"
+color red "\<(and|compl|lshift|or|rshift|xor)\>"
+color red "\<(bindtextdomain|dcgettext|dcngettext)\>"
+
+# RegExp
+color magenta "/.*[^\]/"
+
+# Strings
+color blue ""(\\.|[^"])*"|'(\\.|[^'])*'"
+
+# Special characters
+color magenta "\\."
+
+# Comments
+color white "(^|[[:space:]])#([^{].*)?$"
+color brightblack "^[[:space:]]*##.*$"
+
+# Whitespacing problems
+color ,yellow "[[:space:]]+$"
+color ,yellow " +	+"
+
+# Extras
+color brightwhite,yellow "TODO:?"
+

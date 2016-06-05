@@ -1,0 +1,14 @@
+#
+# ~/.bashrc.cygwin
+# Platform dependent bashrc
+#
+
+## Functions
+
+function takeown() {
+	takeown /R /F "$(cygpath -w "$1")"
+}
+
+function aclreset() {
+	icacls "$(cygpath -w "$1")" /T /Q /C /RESET
+}

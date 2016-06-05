@@ -1,0 +1,25 @@
+#
+# ~/.bash_prompt
+#
+
+
+# Init $PS1
+PS1='\[\ek\e\\' # GNU Screen(1) title-string escape-sequence
+
+# User, inverted if root
+if [[ $UID = 0 ]]; then
+	PS1+='\e[7;1;31m\]\u'
+else
+	PS1+='\e[1;31m\]\u'
+fi
+
+# Host, only if remote
+if [[ ( $SSH_CONNECTION || $SHELLINABOX_URL ) && $TERM != "screen" ]]; then
+    PS1+='\[\e[0m\]@\[\e[4m\]\h'
+fi
+
+# Working dir and prompt
+PS1+='\[\e[0m\]: \W > '
+
+
+export PS1

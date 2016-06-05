@@ -1,0 +1,114 @@
+#
+# ~/.nanorc
+# User initialization file for GNU nano
+#
+
+
+## Editing
+
+# Use auto-indentation
+set autoindent
+
+# Use tabs, ever
+unset tabstospaces
+
+# Default tab size
+set tabsize 4
+
+# Make the Home key smarter
+set smarthome
+
+# Use cut to end of line by default
+set cut
+
+# Don't wrap text at all
+#set nowrap
+
+# Enable soft line wrapping (AKA full line display)
+set softwrap
+
+# Don't add newlines to the ends of files.
+set nonewlines
+
+
+## Interface
+
+# Use bold text instead of reverse video text
+set boldtext
+
+# Use the blank line below the titlebar as extra editing space
+set morespace
+
+# Don't display the helpful shortcut lists at the bottom of the screen
+set nohelp
+
+
+## Backups
+
+# Backup files to filename~
+#set backup
+
+# Unified backup directory
+#set backupdir ""
+
+# Save automatically on exit, don't prompt
+#set tempfile
+
+
+## Searches
+
+# Don't do case sensitive searches
+unset casesensitive
+
+# Do extended regular expression searches by default
+#set regexp
+
+# Enable ~/.nano_history for saving and reading search/replace strings
+set historylog
+
+
+## Extras
+
+# Enable mouse support, if available
+#set mouse
+
+# Use line-by-line scrolling
+#set smooth
+
+# Detect word boundaries more accurately
+set wordbounds
+
+
+## Key bindings
+
+# Key bindings may be reassigned via the following command:
+#
+#   bind <key> <function> <menu>
+#
+# Rebinds the key <key> to a new <function> named function in the
+# context of menu <menu>.
+
+bind M-W nowrap main
+bind M-A casesens search
+
+# Undo/redo... Windows(TM) style!
+bind ^Z undo main
+bind ^Y redo main
+
+# Save file... Windows(TM) style!
+bind ^S writeout main
+unbind ^O main
+
+
+## Syntax highlight
+
+# Include self-contained color syntaxes from syntaxfiles
+#   source: https://github.com/scopatz/nanorc
+include "~/.nano/awk.nanorc"
+include "~/.nano/conf.nanorc"
+include "~/.nano/man.nanorc"
+include "~/.nano/nanorc.nanorc"
+include "~/.nano/sed.nanorc"
+include "~/.nano/sh.nanorc"
+include "~/.nano/systemd.nanorc"
+

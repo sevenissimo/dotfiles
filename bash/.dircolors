@@ -1,0 +1,277 @@
+#
+# ~/.dircolors
+# User configuration file for color 'ls' utility
+#
+
+# COLOR needs one of these arguments: 'tty' colorizes output to ttys, but not
+# pipes. 'all' adds color characters to all output. 'none' shuts colorization
+# off.
+COLOR tty
+
+# Extra command line options for ls go here.
+# Basically these ones are:
+#  -F = show '/' for dirs, '*' for executables, etc.
+#  -T 0 = don't trust tab spacing when formatting ls output.
+#  -b = better support for special characters
+OPTIONS -F -b -T 0
+
+# Below are TERM entries, which can be a glob patterns, to match
+# against the TERM environment variable to determine if it is colorizable.
+TERM Eterm
+TERM ansi
+TERM color-xterm
+TERM con[0-9]*x[0-9]*
+TERM cons25
+TERM console
+TERM cygwin
+TERM dtterm
+TERM eterm-color
+TERM gnome
+TERM gnome-256color
+TERM hurd
+TERM jfbterm
+TERM konsole
+TERM kterm
+TERM linux
+TERM linux-c
+TERM mach-color
+TERM mach-gnu-color
+TERM mlterm
+TERM putty
+TERM putty-256color
+TERM rxvt*
+TERM screen*
+TERM st
+TERM st-256color
+TERM terminator
+TERM tmux*
+TERM vt100
+TERM xterm*
+
+# EIGHTBIT, followed by '1' for on, '0' for off. (8-bit output)
+EIGHTBIT 1
+
+
+# Below are the color init strings for the basic file types. A color init
+# string consists of one or more of the following numeric codes:
+# Attribute codes:
+#   00=none 01=bold 04=underscore 05=blink 07=reverse 08=concealed
+# Text color codes:
+#   30=black 31=red 32=green 33=yellow 34=blue 35=magenta 36=cyan 37=white
+# Background color codes:
+#   40=black 41=red 42=green 43=yellow 44=blue 45=magenta 46=cyan 47=white
+
+
+## By type
+
+RESET  0       # "normal" color
+NORMAL 0       # plain text
+FILE   0       # regular file
+DIR    1;30;47 # directory
+LINK   4;36    # symbolic link.
+FIFO     36;47 # pipe
+SOCK     36;47 # socket
+DOOR     36;47 # door (Solaris 2.5 and later)
+BLK    1;37;41 # block device driver
+CHR    1;37;43 # character device driver
+
+
+## By attributes
+
+ORPHAN  4;5   # symlink to nonexistent file, or non-stat'able file
+MISSING 0     # ...and the files that orphaned symlinks point to
+
+#SETUID     37;41 # file that is setuid (u+s)
+#SETGID     30;43 # file that is setgid (g+s)
+#CAPABILITY 30;41 # file with capability
+
+# Directories (mostly override 'DIR' on FAT/NTFS)
+STICKY_OTHER_WRITABLE 1;4;30;47 # dir that is sticky and other-writable (+t,o+w)
+OTHER_WRITABLE        1;4;30;47 # dir that is other-writable (o+w) and not sticky
+STICKY                1;4;30;47 # dir with the sticky bit set (+t) and not other-writable
+
+# Files with execute permission
+EXEC   0    # Disabled because of FAT/NTFS mess
+
+
+## By extension
+
+# List any file extensions like '.gz' or '.tar' that you would like ls
+# to colorize below. Put the extension, a space, and the color init string.
+# (and any comments you want to add after a '#')
+
+# Executables, even if they're not (a-x)
+# DOS-style suffixes
+.cmd   1;4;32
+.exe   1;4;32
+.EXE   1;4;32
+.com   1;4;32
+.bat   1;4;32
+.BAT   1;4;32
+.reg   1;4;32
+.app   1;4;32
+
+# UNIX scripts
+.sh    1;4;31
+.csh   1;4;31
+.zhs   1;4;31
+
+# Archives, compressed
+.apk   4;33
+.arj   4;33
+.bin   4;33
+.bz    4;33
+.bz2   4;33
+.cab   4;33
+.deb   4;33
+.dmg   4;33
+.gem   4;33
+.gz    4;33
+.iso   4;33
+.jar   4;33
+.msi   4;33
+.rar   4;33
+.rpm   4;33
+.tar   4;33
+.tbz   4;33
+.tbz2  4;33
+.tgz   4;33
+.tx    4;33
+.war   4;33
+.xpi   4;33
+.xz    4;33
+.z     4;33
+.zip   4;33
+
+# Text formats
+.txt   30
+.TXT   30
+.org   30
+.md    30
+.mkd   30
+
+# Source files
+.h     32
+.c     32
+.cc    32
+.cxx   32
+.objc  32
+.el    32
+.vim   32
+.java  32
+.pl    32
+.pm    32
+.py    32
+.rb    32
+.hs    32
+.php   32
+.htm   32
+.html  32
+.xml   32
+.rdf   32
+.css   32
+.js    32
+.man   32
+.pod   32
+.tex   32
+
+# Images
+.bmp   36
+.cgm   36
+.dl    36
+.dvi   36
+.emf   36
+.eps   36
+.gif   36
+.jpeg  36
+.jpg   36
+.mng   36
+.pbm   36
+.pcx   36
+.pgm   36
+.png   36
+.ppm   36
+.pps   36
+.ppsx  36
+.ps    36
+.psd   36
+.svg   36
+.svgz  36
+.tga   36
+.tif   36
+.tiff  36
+.xbm   36
+.xcf   36
+.xpm   36
+.xwd   36
+.xwd   36
+.yuv   36
+
+# Audio
+.aac   36
+.au    36
+.flac  36
+.mid   36
+.midi  36
+.mka   36
+.mp3   36
+.mpa   36
+.mpeg  36
+.mpg   36
+.ogg   36
+.ra    36
+.wav   36
+
+# Video
+.anx   36
+.asf   36
+.avi   36
+.axv   36
+.flc   36
+.fli   36
+.flv   36
+.gl    36
+.m2v   36
+.m4v   36
+.mkv   36
+.mov   36
+.mp4   36
+.mp4v  36
+.mpeg  36
+.mpg   36
+.nuv   36
+.ogm   36
+.ogv   36
+.ogx   36
+.qt    36
+.rm    36
+.rmvb  36
+.swf   36
+.vob   36
+.wmv   36
+
+# Documents
+.doc   34
+.docx  34
+.rtf   34
+.dot   34
+.dotx  34
+.xls   34
+.xlsx  34
+.ppt   34
+.pptx  34
+.fla   34
+.pdf   34
+
+# Unimportant files
+.0     37
+.log   37
+.bak   37
+.old   37
+.off   37
+.dist  37
+.orig  37
+.swp   37
+.swo   37
+*~     37
+*#     37

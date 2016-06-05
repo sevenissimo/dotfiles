@@ -1,0 +1,28 @@
+# nanorc.nanorc
+# Syntax for nanorc files.
+#
+
+syntax "Nanorc" "\.?nanorc$"
+
+
+# Possible errors
+icolor ,yellow "^[[:space:]]*((un)?set|include|syntax|i?color)[[:space:]]*$"
+
+# Keywords
+#icolor black "^[[:space:]]*(set|unset)[[:space:]]+(autoindent|backup|backupdir|backwards|boldtext|brackets|casesensitive|const|cut|fill|historylog|matchbrackets|morespace|mouse|multibuffer|noconvert|nofollow|nohelp|nonewlines|nowrap|operatingdir|preserve|punct)\>" "^[[:space:]]*(set|unset)[[:space:]]+(quickblank|quotestr|rebinddelete|rebindkeypad|regexp|smarthome|smooth|speller|suspend|tabsize|tabstospaces|tempfile|undo|view|whitespace|wordbounds)\>"
+icolor red "^[[:space:]]*(set|unset|include|syntax|header)\>"
+
+# Colors
+icolor cyan "^[[:space:]]*i?color[[:space:]]*(bright)?(white|black|red|blue|green|yellow|magenta|cyan)?(,(white|black|red|blue|green|yellow|magenta|cyan))?\>"
+icolor red  "^[[:space:]]*i?color\>" "\<(start|end)="
+
+# Strings
+icolor blue ""(\\.|[^"])*""
+
+# Comments
+icolor white "^[[:space:]]*#.*$"
+icolor brightblack "^[[:space:]]*##.*$"
+
+# Whitespace problems
+color ,yellow "[[:space:]]+$"
+color ,yellow " +	+"

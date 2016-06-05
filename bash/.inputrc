@@ -1,0 +1,54 @@
+# 
+# ~/.inputrc
+# Personal GNU Readline settings
+#
+
+## You can re-read the inputrc file with C-x C-r ##
+
+
+# Set various bindings for emacs mode.
+$if mode=emacs
+	# Page up/down search on the history
+	"\e[5~": history-search-backward
+	"\e[6~": history-search-forward
+$endif
+
+
+# Macros that are convenient for shell interaction
+$if Bash
+	# use a visible bell if one is available
+	set bell-style visible
+
+	# Horizontally sorted completion matches
+	set print-completions-horizontally on
+
+	# Filename completion/expansion
+	set completion-ignore-case on
+	set show-all-if-ambiguous on
+	set show-all-if-unmodified on
+
+	# Windows(TM) completion style
+	#TAB: menu-complete
+
+	# Don't expand homedir name
+	set expand-tilde off
+
+	# Append "/" to all dirnames
+	set mark-directories on
+	set mark-symlinked-directories on
+
+	# Enable coloring for tab completions with bash >= 4.3
+	#set colored-stats on
+
+	# 'Magic Space'
+	# Insert a space character then performs
+	# a history expansion in the line
+	Space: magic-space
+
+	# Insert open and close double quotes
+	# and move to just after the open quote
+	"\C-x\"": "\"\"\C-b"
+
+	# Quote the current or previous word
+	"\C-xq": "\eb\"\ef\""
+$endif
