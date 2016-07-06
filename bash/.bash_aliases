@@ -23,7 +23,7 @@ alias du='du -h'
 ## Directory listings
 
 # Classify files in colour
-alias ls='ls -hF --color=auto --group-directories-first'
+alias ls='ls -Nh --color=auto --group-directories-first'
 alias ll='ls -l' # Long list
 alias la='ls -A' # All, but . and ..
 

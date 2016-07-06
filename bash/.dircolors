@@ -10,10 +10,11 @@ COLOR tty
 
 # Extra command line options for ls go here.
 # Basically these ones are:
-#  -F = show '/' for dirs, '*' for executables, etc.
-#  -T 0 = don't trust tab spacing when formatting ls output.
-#  -b = better support for special characters
-OPTIONS -F -b -T 0
+#  -N	raw entry names
+#  -F	show '/' for dirs, '*' for executables, etc.
+#  -T 0	don't trust tab spacing when formatting ls output.
+#  -b	better support for special characters
+OPTIONS -N -b
 
 # Below are TERM entries, which can be a glob patterns, to match
 # against the TERM environment variable to determine if it is colorizable.
@@ -46,6 +47,7 @@ TERM st-256color
 TERM terminator
 TERM tmux*
 TERM vt100
+TERM xterm
 TERM xterm*
 
 # EIGHTBIT, followed by '1' for on, '0' for off. (8-bit output)
@@ -144,11 +146,11 @@ EXEC   0    # Disabled because of FAT/NTFS mess
 .zip   4;33
 
 # Text formats
-.txt   30
-.TXT   30
-.org   30
-.md    30
-.mkd   30
+.txt   0
+.TXT   0
+.org   0
+.md    0
+.mkd   0
 
 # Source files
 .h     32

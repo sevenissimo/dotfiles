@@ -34,11 +34,12 @@ function extract() {
 	fi
 }
 
-# List unpaired files
-#   usage: unpaired [EXT1 [EXT2]]
-function unpaired() {
-	for file in *."${1:-avi}"; do
-		[[ -f ${file%.*}.${2:-jpg} ]] || echo "$file"
+# List mismatched files
+#   usage: mismatched [EXT1 [EXT2]]
+function mismatched() {
+	#for file in *."${1:-avi}"; do
+	find . -name "*.${1:-avi}" | while read file; do
+		[[ -f "${file%.*}.${2:-jpg}" ]] || echo "${file}"
 	done
 }
 

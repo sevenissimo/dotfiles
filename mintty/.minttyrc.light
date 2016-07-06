@@ -1,0 +1,17 @@
+BoldAsColour=yes
+BoldAsFont=yes
+Term=xterm-256color
+Locale=it_IT
+Charset=UTF-8
+Font=Consolas
+FontHeight=8
+FontSmoothing=full
+CursorBlinks=no
+CursorType=line
+Transparency=low
+OpaqueWhenFocused=no
+ClicksPlaceCursor=yes
+Columns=120
+Rows=24
+BackgroundColour=255,255,255
+ForegroundColour=0,0,0

@@ -24,6 +24,8 @@ export PAGER="less"
 
 ## Apps config
 export LESS='-R'
+# Revert to pre-8.25 LS behavior
+export QUOTING_STYLE=literal
 
 # Lynx browser settings
 export WWW_HOME="http://google.com/"
