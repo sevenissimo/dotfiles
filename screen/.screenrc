@@ -58,19 +58,18 @@ idle 240 lockscreen
 bind  r colon # as "run"
 bind ^R source .screenrc
 bind  l lockscreen
-bind  N screen 1
 bind ^T screen -ln 10 top
-bind  q stuff "exit\n"
 
 # Keybinding
 # Switch prev/next window with Ctrl+Left/Right arrow
 bindkey "^[[1;5D" prev
+bindkey "^[O5D"   prev
 bindkey "^[[1;5C" next
+bindkey "^[O5C"   next
    
 # Cycle among windows with Ctrl+TAB
 bindkey "^[[1;5I" next
 
 # Other keybindgs
-#bindkey ^N screen
-#bindkey ^T screen -ln 9 top
+#bindkey ^T screen -ln 10 top
 

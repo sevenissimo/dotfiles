@@ -56,4 +56,4 @@ alias diff='diff -uN'
 
 # Vim style, even if I hate Vim.
 alias :q=' exit'
-alias :s=' screen -R'
+alias :s=' screen -dRR'
