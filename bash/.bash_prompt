@@ -14,12 +14,29 @@ else
 fi
 
 # Host, only if remote
-if [[ ( $SSH_CONNECTION || $SHELLINABOX_URL ) && $TERM != "screen" ]]; then
+if [[ ( $SSH_CONNECTION || $SHELLINABOX_URL ) && ${TERM%.*} != "screen" ]]; then
     PS1+='\[\e[0m\]@\[\e[4m\]\h'
 fi
 
 # Working dir and prompt
 PS1+='\[\e[0m\]: \W > '
 
-
 export PS1
+
+
+# Prompt command to print more infos
+function __prompt_command() {
+	local exit=$?
+	local color
+
+	# Use red color if exit status != 0
+	[[ $exit -ne 0 ]] && color="\e[1;31m"
+
+	# Align to right:
+	# 15 offset used for control and Unicode chars
+	printf \
+		"%$(( COLUMNS + 15 ))b\r" \
+		"\xe2\x80\xa2$(date +%H:%M) ${color:-\e[1;32m}\xe2\x86\x90${exit}\e[0m"
+}
+
+export PROMPT_COMMAND=__prompt_command

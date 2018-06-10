@@ -8,13 +8,16 @@
 
 ## Backticks
 # CPU load in percent
-backtick 1 10 10 sh -c "ps aux | awk '{sum+=\$3} END {print sum}'"
+#backtick 1 10 10 sh -c "ps aux | awk '{sum+=\$3} END {print sum}'"
 # CPU Temp on BananaPi
-backtick 2 30 30 awk '{printf("%0.1f", $1/1000)}' /sys/devices/platform/soc@01c00000/1c25000.rtp/hwmon/hwmon0/temp1_input
+#backtick 2 30 30 awk '{printf("%0.1f", $1/1000)}' /sys/devices/platform/soc@01c00000/1c25000.rtp/hwmon/hwmon0/temp1_input
+
+# All-in-one (hwstat yield output once a 10 sec.)
+backtick 1 0 0 $HOME/devel/hwstat/hwstat -a -s"|" -l10
 
 # Informative statusbar, Windows(TM) style!
 #hardstatus alwayslastline '%{=u kw}%H%{-u}: %?%-w%?%{+rb} %n %t %{-}%?%+w%?%=%1`%% @ %2`C  %c ' # Dark
- hardstatus alwayslastline '%{=u wk}%H%{-u}: %?%-w%?%{+r} %n %t %{-}%?%+w%?%= %1`%% @ %2`C  %c ' # Light
+ hardstatus alwayslastline '%{=u wk}%H%{-u}: %?%-w%?%{+r} %n %t %{-}%?%+w%?%= CPU:%1`|%c' # Light
 
 # Set window title to the name of the running program
 # shelltitle syntax: "<prompt-end>|<default-title>"

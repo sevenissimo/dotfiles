@@ -7,20 +7,26 @@
 # \rm will call the real rm not the alias.
 #
 
-# Fault tollerant 'cd'
-alias cd..='cd ..'
+# Directory navigation
+alias cd..='cd ..' # Fault tollerant
+alias   ..='cd ..' # Shortcut
 
 # Interactive operations
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
+# Directory creation/deletion
+alias md=mkdir
+alias rd='rm -id' #rmdir
+alias rd+='rmdir -p'
+
 # Default to human readable units
 alias df='df -h'
 alias du='du -h'
 
 
-## Directory listings
+## Listings
 
 # Classify files in colour
 alias ls='ls -Nh --color=auto --group-directories-first'
@@ -34,7 +40,7 @@ alias lsold='ls -tl  | head'
 
 # List subdirectories
 alias ld='ls -d */'
-alias ldls='ls */' # ...and their content
+alias lsd='ls */' # ...and their content
 
 # Directory size
 alias ds='du -sh'
@@ -51,9 +57,22 @@ alias less='less -R'
 
 ## Personal shortcuts and one-liners
 
+alias copy='rsync -rsvP'
 alias free='free -h'
 alias diff='diff -uN'
 
-# Vim style, even if I hate Vim.
-alias :q=' exit'
-alias :s=' screen -dRR'
+alias screen='\screen -dRR' # Don't save to hist
+
+# Case switch
+alias lower='tr [:upper:] [:lower:]'
+alias upper='tr [:lower:] [:upper:]'
+
+
+## Disk management
+
+# Mount world writable
+alias mount-rw='sudo mount -o rw,dmask=000,fmask=111,noatime'
+
+# Veracrypt
+alias vcrypt='sudo cryptsetup --veracrypt open --type tcrypt'
+alias vcrypt-hidden='sudo cryptsetup --veracrypt --tcrypt-hidden open --type tcrypt'

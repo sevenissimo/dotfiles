@@ -26,6 +26,9 @@ export PS1='\[\e[1m\ek\e\\\]\u \[\e[0;37m\]\W \[\e[0m\]> '
 shopt -s cdspell
 shopt -s dirspell
 
+# Type directory name to cd it
+shopt -s autocd
+
 # Argument to 'cd' builtin command that is not a directory
 # is assumed to be a variable whose value is the path to change to.
 shopt -s cdable_vars
@@ -54,12 +57,13 @@ export HISTIGNORE=$'&:[ \t]*:[fb]g:l[slad]*:cd*:mv*:rm*:exit:\:*'
 # export PROMPT_COMMAND="history -a"
 
 # On exit, erase duplicated lines in history (across sessions)
-histerasedups () {
-	nl "$HISTFILE" | sort -k 2 -k 1,1nr | uniq -f 1 | sort -n | cut -f 2 \
-		> "${HISTFILE}.uniq" && mv -f "${HISTFILE}"{.uniq,}
+__history_erasedups () {
+	if nl "$HISTFILE" | sort -k 2 -k 1,1nr | uniq -f 1 | sort -n | cut -f 2 > "${HISTFILE}.uniq"; then
+		[[ -s "$HISTFILE.uniq" ]] && mv -f "${HISTFILE}"{.uniq,}
+	fi
 	clear
 }
-trap histerasedups EXIT
+#trap __history_erasedups EXIT
 
 
 ## Aliases

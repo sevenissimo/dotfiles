@@ -3,15 +3,15 @@
 #
 
 
-# Create directory and cd into
-# function md() {
-#	mkdir -p "$@" && cd "$_"
-# }
+## Utils
 
-# Copy w/ progress
-# function cpp() {
-#	rsync -Wav --human-readable --progress "$@"
-# }
+# Create directory and navigate into it
+#	usage: mkdir+ /path/to/dir
+function _mkdir() {
+	mkdir -p "$@" && cd "$_"
+}
+alias mkdir+=_mkdir
+alias    md+=_mkdir
 
 # Extract anything
 #   usage: extract FILE
@@ -35,12 +35,17 @@ function extract() {
 }
 
 # List mismatched files
-#   usage: mismatched [EXT1 [EXT2]]
-function mismatched() {
-	#for file in *."${1:-avi}"; do
-	find . -name "*.${1:-avi}" | while read file; do
+#   usage: unpaired [EXT1 [EXT2]]
+function unpaired() {
+	find . -iname "*.${1:-avi}" | while read file; do
 		[[ -f "${file%.*}.${2:-jpg}" ]] || echo "${file}"
 	done
+}
+
+# Search for paragraph
+#	usage: skim FILE [MATCH]
+function skim() {
+	sed -n "/${2}/I,/^$/p" "$1"
 }
 
 
@@ -62,4 +67,13 @@ function jd_catch() {
 # Exit JD sending SIGTERM
 function jd_kill() {
 	kill $(awk '{print $1}' "/opt/JDownloader/JDownloader.pid")
+}
+
+# Add links from stdin or from file
+function jd_add() {
+	if [[ -f $1 ]]; then
+		xargs -a "$1" jdownloader -add-links
+	else
+		jdownloader -add-links $@
+	fi
 }
