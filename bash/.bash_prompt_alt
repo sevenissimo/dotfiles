@@ -1,0 +1,15 @@
+#
+# ~/.bash_prompt2
+# Alternative minimalistic prompt
+#
+
+# Go to previus line (\e[A) and right-align (\e[nG) <exit-code>|<time>
+PS1='\[\e7\e[A\e[$((COLUMNS-6-${#?}))G\e[$(($??31:32))m$?\e[37m|\A\e8'
+
+# On GNU Screen: set window hardstatus to <pwd> and put escape sequence
+[[ $TERM = screen* ]] && PS1+='\e_\w\e\\\ek\e\\' || PS1+='\]\W:\['
+
+# Print <cwd><prompt> colored on UID basis
+PS1+='\e[$((UID?0:7));1m\]$\[\e[m\] '
+
+export PS1

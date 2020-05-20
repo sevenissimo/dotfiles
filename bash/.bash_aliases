@@ -24,19 +24,20 @@ alias rd+='rmdir -p'
 # Default to human readable units
 alias df='df -h'
 alias du='du -h'
+alias free='free -h'
 
 
 ## Listings
 
-# Classify files in colour
-alias ls='ls -Nh --color=auto --group-directories-first'
+# Classify files in colors
+alias ls='ls -FNh --color=auto --group-directories-first'
 alias ll='ls -l' # Long list
 alias la='ls -A' # All, but . and ..
 
 # Long list, sort by time
 # Use "lsnew -nx" to list latest 'x' files
-alias lsnew='ls -rtl | tail'
-alias lsold='ls -tl  | head'
+alias ls_new='ls -rtl | tail'
+alias ls_old='ls -tl  | head'
 
 # List subdirectories
 alias ld='ls -d */'
@@ -51,21 +52,21 @@ alias ds='du -sh'
 # Show matches in color
 alias grep='grep --color=auto'
 
-# Color on less (not control chars)
-alias less='less -R'
+# Use colors on GNU Less
+# Option moved into ~/.less
+#alias less='less -R'
 
 
 ## Personal shortcuts and one-liners
 
 alias copy='rsync -rsvP'
-alias free='free -h'
 alias diff='diff -uN'
 
-alias screen='\screen -dRR' # Don't save to hist
+alias screen='screen -dRR'
+alias shred='shred -u' # Be careful!
 
 # Case switch
-alias lower='tr [:upper:] [:lower:]'
-alias upper='tr [:lower:] [:upper:]'
+# Pure bash functions are preferable
 
 
 ## Disk management

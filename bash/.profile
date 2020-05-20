@@ -1,7 +1,7 @@
 #
 # ~/.profile
-# User dependent .profile file
-# executed by the command interpreter for login shells.
+# Personal startup file for csh/sh/bash shells.
+# Executed by the command interpreter for login shells.
 #
 
 ### By default, this file is not read by bash(1) ###
@@ -17,24 +17,31 @@ if [ -d "${HOME}/.local/bin" ]; then
 fi
 
 
+## Terminal settings
+
+# Let any char restart output after XOFF
+# and "unbind" usefull ^Q keystroke
+stty ixany
+stty start ^@
+
+
 ## Default apps
-export EDITOR="nano"
+
+export EDITOR=nano
 export GIT_EDITOR=$EDITOR
-export PAGER="less"
+export PAGER=less
+
 
 ## Apps config
-export LESS='-R'
+
+## All GNU Less vars (like LESS_TERMCAP_*) removed. ##
+## Options will be loaded from ~/.less file instead ##
+
+## GREP_OPTIONS is also deprecated ##
+
 # Revert to pre-8.25 LS behavior
 export QUOTING_STYLE=literal
 
 # Lynx browser settings
 export WWW_HOME="http://google.com/"
 export LYNX_LSS="$HOME/.lynx.lss"
-
-
-## Env
-
-# cdable vars
-export hdd="/hdd/"
-export lib="/hdd/Movies/"
-export  dl="/hdd/Downloads/"

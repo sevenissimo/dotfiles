@@ -2,41 +2,18 @@
 # ~/.bash_prompt
 #
 
+# <time> <exit-code> right-aligned and colored on exit-code basis
+# Note: \e7 save cur.pos.;  \e[F prev.row;  \e[nG n-cols right;
+#       \e8 restore cur.pos.;  $'..' esc. unicode
+PS1=$'\[\e7\e[F\e[$((COLUMNS-7-${#?}))G\u25cc\A\e[1;$(($??31:32))m\u2190$?\e8'
 
-# Init $PS1
-PS1='\[\ek\e\\' # GNU Screen(1) title-string escape-sequence
+# <user> in red, with inverted bg/fg if root
+PS1+='\e[$((UID?0:7));1;31m\]\u'
 
-# User, inverted if root
-if [[ $UID = 0 ]]; then
-	PS1+='\e[7;1;31m\]\u'
-else
-	PS1+='\e[1;31m\]\u'
-fi
+# <hostname> only if remote but not within GNU Screen
+[[ -n "$SSH_TTY" && -z "$STY" ]] &&	PS1+='\[\e[m\]@\[\e[4m\]\h'
 
-# Host, only if remote
-if [[ ( $SSH_CONNECTION || $SHELLINABOX_URL ) && ${TERM%.*} != "screen" ]]; then
-    PS1+='\[\e[0m\]@\[\e[4m\]\h'
-fi
-
-# Working dir and prompt
-PS1+='\[\e[0m\]: \W > '
+# GNU Screen escape sequence, <pwd> <prompt>
+PS1+='\[\e[m\ek\e\\\]: \W \$ '
 
 export PS1
-
-
-# Prompt command to print more infos
-function __prompt_command() {
-	local exit=$?
-	local color
-
-	# Use red color if exit status != 0
-	[[ $exit -ne 0 ]] && color="\e[1;31m"
-
-	# Align to right:
-	# 15 offset used for control and Unicode chars
-	printf \
-		"%$(( COLUMNS + 15 ))b\r" \
-		"\xe2\x80\xa2$(date +%H:%M) ${color:-\e[1;32m}\xe2\x86\x90${exit}\e[0m"
-}
-
-export PROMPT_COMMAND=__prompt_command

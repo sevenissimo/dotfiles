@@ -1,0 +1,9 @@
+#env
+LESS = -R
+LESS_TERMCAP_mb = \e[1;5;31m
+LESS_TERMCAP_md = \e[1;31m
+LESS_TERMCAP_me = \e[m
+LESS_TERMCAP_so = \e[7;37m
+LESS_TERMCAP_se = \e[m
+LESS_TERMCAP_us = \e[1;4;36m
+LESS_TERMCAP_ue = \e[m

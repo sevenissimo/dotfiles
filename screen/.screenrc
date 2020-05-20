@@ -1,31 +1,48 @@
 #
 # ~/.screenrc
-# User dependent GNU Screen config
+# Personal GNU Screen config
 #
 
+### Live reload screenrc files with C-a C-r ###
 
-## UI
+
+## UI Elements
+
+# Window title (%t)
+# Auto-update window title to running command or default
+#   shelltitle syntax: "<end-of-prompt>|<default-title>"
+shelltitle "$ |$"
+
+# Hardstatus line (%h)
+# Let Bash prompt set it to shortened $PWD
+#defhstatus
+
+# Message line
+# Set standoff attributes and color
+rendition so = wk   # dimmed colors
 
 ## Backticks
-# CPU load in percent
-#backtick 1 10 10 sh -c "ps aux | awk '{sum+=\$3} END {print sum}'"
-# CPU Temp on BananaPi
-#backtick 2 30 30 awk '{printf("%0.1f", $1/1000)}' /sys/devices/platform/soc@01c00000/1c25000.rtp/hwmon/hwmon0/temp1_input
 
-# All-in-one (hwstat yield output once a 10 sec.)
-backtick 1 0 0 $HOME/devel/hwstat/hwstat -a -s"|" -l10
+# CPU load in percent (fallback)
+#backtick 1 10 10 sh -c "ps axo pcpu|awk '{s+=\$0}END{print s}'"
 
-# Informative statusbar, Windows(TM) style!
-#hardstatus alwayslastline '%{=u kw}%H%{-u}: %?%-w%?%{+rb} %n %t %{-}%?%+w%?%=%1`%% @ %2`C  %c ' # Dark
- hardstatus alwayslastline '%{=u wk}%H%{-u}: %?%-w%?%{+r} %n %t %{-}%?%+w%?%= CPU:%1`|%c' # Light
+# All-in-one
+# HWStat is an homebrew command to fetch system stats on BananaPi
+# Invoked with -ln option, it yelds output every 'n' sec.
+#   source: soon available on Github
+backtick 1 0 0 $HOME/.local/bin/hwstat -a -s"|" -l10
 
-# Set window title to the name of the running program
-# shelltitle syntax: "<prompt-end>|<default-title>"
-shelltitle "> |bash"
+## Hardstatus
 
-# When an activity occurs in any background window,
-# display a notification in message line.
-defmonitor on
+# A. Tab-like statusbar
+#    List all windows as [# cmd] tabs, B/W or reverse, hwstat.
+#hardstatus alwayslastline '%{=ru}%H%{-u}:%-w%{-r}%L> %n %t %{-}%+w %=%1`|%-5<%c' # Dark
+#hardstatus alwayslastline '%{=u}%H%{-u}:%-w%{+s}%L> %n %t %{-}%+w %=%1`|%-5<%c' # Light
+
+# B. Minimalistic (active)
+#    Intended to co-operate with specific Bash prompt,
+#    list all windows as [# cmd:pwd] text, dimmed B/W, hwstat.
+hardstatus alwayslastline '%{= dw}%-w%{+s}%L>%n%{-} %h:%t%+w %=%1`%-6<|%c'
 
 
 ## General
@@ -33,46 +50,50 @@ defmonitor on
 # Turn welcome message off
 startup_message off
 
-# Disable fullscreen blink
-vbell off
+# Visual bell
+vbell on
+vbell_msg "Meow!"
+
+# When an activity occurs in any background window,
+# display a notification in message line
+defmonitor on
 
 # Change default scrollback value for new windows
 defscrollback 1024
 
 # Fix for residual editor text
-# When you open a text editor like nano in screen and then close it,
-# the text may stay visible in your terminal. Fix this.
+# When you open a text editor like Nano in screen
+# and then close it, the text may stay visible in
+# your terminal. Fix this.
 altscreen on
+
+# Set the format of time reported to message line
+time '%{=u}%H%{-}: %D %d %M %Y - %c:%s'
 
 
 ## Idle / Lockscreen
 
 # Lock screen after an "idle time" of N seconds
-idle 240 lockscreen
-
-# After "idle timeout" start console screen saver "cmatrix"
-# and (important!) reset the idle mechanism after that.
-#idle 120 eval "screen cmatrix" "idle 0"
+idle 600 lockscreen
 
 
 ## Key bindings
 
-# Escaped commands (Ctrl+A + key)
-bind  r colon # as "run"
-bind ^R source .screenrc
+# Ctrl+A Escaped commands
+bind ^R source "~/.screenrc"
 bind  l lockscreen
-bind ^T screen -ln 10 top
+bind ^X colon
+bind  y paste .
+bind ^Y paste .
+bind ^T screen -l top
 
-# Keybinding
-# Switch prev/next window with Ctrl+Left/Right arrow
+# Switch prev/next window with Ctrl+Left/Right
 bindkey "^[[1;5D" prev
-bindkey "^[O5D"   prev
 bindkey "^[[1;5C" next
+bindkey "^[O5D"   prev
 bindkey "^[O5C"   next
-   
-# Cycle among windows with Ctrl+TAB
+
+# Cycle among all windows with Ctrl+TAB
+# Let Ctra+A TAB toggle prev/cur. window
 bindkey "^[[1;5I" next
-
-# Other keybindgs
-#bindkey ^T screen -ln 10 top
-
+bind     \011     other

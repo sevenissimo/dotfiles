@@ -1,16 +1,19 @@
 #
 # ~/.bash_profile
-# User dependent .bash_profile file
-# executed by bash(1) for login shells.
-#
+# Personal Bash startup file, executed when
+# Bash is invoked as an interactive login shell.
 
-# By default, ~/.profile is not read by bash(1)
-# if this file (or ~/.bash_login) exists.
-if [[ -r ${HOME}/.profile ]]; then
-	source ${HOME}/.profile
-fi
+### Bash first executes commands from /etc/profile ###
 
-# Load ~/.bashrc also for non-login shells.
-if [[ -r ${HOME}/.bashrc ]]; then
-	source ${HOME}/.bashrc
-fi
+
+# By default, ~/.profile is not read by Bash if this file
+# (or ~/.bash_login) exists, but I still use it.
+[[ -r ~/.profile ]] && . ~/.profile
+
+# Unset ArchLinux default command_prompt, set new one later.
+unset COMMAND_PROMPT
+
+## End of login-specific initializations ##
+
+# Load ~/.bashrc also for login shells.
+[[ -r ~/.bashrc ]] && . ~/.bashrc

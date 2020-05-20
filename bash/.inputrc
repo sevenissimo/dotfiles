@@ -1,21 +1,34 @@
-# 
+#
 # ~/.inputrc
 # Personal GNU Readline settings
 #
 
-## You can re-read the inputrc file with C-x C-r ##
+### Live reload inputrc files with C-x C-r ###
 
 
 # Set various bindings for emacs mode.
 $if mode=emacs
-	# Page up/down search on the history
+
+	# PgUp/PgDown search on the history
 	"\e[5~": history-search-backward
 	"\e[6~": history-search-forward
+
+	# Ctrl-Up/Down to navigate history
+	"\e[1;5A": beginning-of-history
+	"\e[1;5B": end-of-history
+
+	"\e[O5A": beginning-of-history
+	"\e[O5B": end-of-history
+
+	# Ins: toggle overwrite mode
+	"\e[2~": overwrite-mode
+
 $endif
 
 
-# Macros that are convenient for shell interaction
+# Convenient settings for shell interaction
 $if Bash
+
 	# use a visible bell if one is available
 	set bell-style visible
 
@@ -37,7 +50,11 @@ $if Bash
 	set mark-directories on
 	set mark-symlinked-directories on
 
+	# Show stat on complete
+	set visible-stats on
+
 	# Enable coloring for tab completions with bash >= 4.3
+	#set colored-completion-prefix on
 	#set colored-stats on
 
 	# 'Magic Space'
@@ -45,10 +62,45 @@ $if Bash
 	# a history expansion in the line
 	Space: magic-space
 
+
+	## Bindings
+	
+	# 'Magic Quotes' (Alt-")
 	# Insert open and close double quotes
 	# and move to just after the open quote
-	"\C-x\"": "\"\"\C-b"
+	"\e\"": "\"\"\C-b"
 
 	# Quote the current or previous word
-	"\C-xq": "\eb\"\ef\""
+	"\C-xq": "\eb\"\ef\"\C-b"
+	"\C-q": "\C-xq"   # need stty -ixoff
+
+
+	# Other bindings to workaround issues with IT kbd layout
+	# Try to uniform to GNU Nano keybindings...
+	"\e-": undo
+	"\e.": set-mark
+	"\e/": insert-comment
+
+
+	# Try to mimic GNU Nano behaviour...
+	"\e[3;5~": kill-word        # Ctrl-Del:    del word right
+	"\e[3;6~": unix-word-rubout # Ctrl-Sh-Del: del word left
+	"\e[3;3~": "\C-a\C-k"       # Alt-Del:     del whole line
+
+	#"\e": kill-word
+	#"": unix-word-rubout   # Ctrl-Sh-Del: del word left
+	#"\ed": "\C-a\C-k"
+
+	
+	# Copy word to kill buffer
+	"\C-x\C-k": copy-forward-word
+	"\C-x\C-w": copy-backward-word
+
+	# Other
+	"\C-xl": "\C-e | less"
+	"\C-xg": "\C-e | grep ''\C-b"
+
+	# Fn keys
+	"\e[15~": clear-screen  # F5
+
 $endif
