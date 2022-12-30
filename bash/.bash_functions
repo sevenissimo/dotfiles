@@ -10,8 +10,6 @@ take() {
 	: "${1:?Missing operand}"
 	mkdir -p "$@" && cd "$_"
 }
-alias mkdir+=take
-alias    md+=take
 
 # Extract anything
 #   usage: extract FILE [FILE...]
@@ -34,6 +32,32 @@ extract() {
 		echo "extract: '$f' is not a valid file" >&2
 		continue # exit 1
 	fi done
+}
+
+# Cleanup all empty sub-directories
+#   usage cleanup [DIR]
+cleanup() {
+	find "${1:-.}" -mindepth 1 -type d -empty -delete
+}
+
+# Flatten
+# Move files to CWD, remove empty directories.
+#   usage: flatten [DIR]
+flatten() {
+	find "${1:-.}" -mindepth 1 -type f -exec mv {} "${1:-.}/" \; && \
+	find "${1:-.}" -mindepth 1 -type d -empty -delete
+}
+
+# (Re)Set permissions on sub-directories (at any depth)
+#   usage: chmod-dirs [MODO] [DIR]
+chmod-dirs() {
+	find "${2:-.}" -mindepth 1 -type d -exec chmod "${1:-775}" {} \;
+}
+
+# (Re)Set permissions on files (at any depth)
+#   usage: chmod-files [MODO] [DIR]
+chmod-files() {
+	find "${2:-.}" -type f -exec chmod "${1:-664}" {} \;
 }
 
 # List unpaired files
@@ -64,19 +88,37 @@ pkgbuild() {
 ## JDownloader
 
 # Display current JD process
-jd_catch() {
+jd-catch() {
 	ps ax | grep "[J]Downloader.jar"
 }
 
 # Exit JD sending SIGTERM
-jd_kill() {
-	kill "$(</opt/jdownloader/JDownloader.pid)"
-}
+# Not working since JD has run as Systemd Service on my system
+# https://gist.github.com/sevenissimo/0dc97bae29a5db89a7041303733d4948
+#jd-kill() {
+#	kill "$(</opt/jdownloader/JDownloader.pid)"
+#}
 
 # Add links from file or stdin
-jd_add() {
-	if [[ -f "${1:?Missing operand}" ]]
-	then jdownloader -add-links "$(<"$1")"
-	else jdownloader -add-links "$@"
-	fi
+# Not working since JD has run as Systemd Service with PrivateUser=on
+# https://gist.github.com/sevenissimo/0dc97bae29a5db89a7041303733d4948
+#jd-add() {
+#	if [[ -f "${1:?Missing operand}" ]]
+#	then jdownloader -add-links "$(<"$1")"
+#	else jdownloader -add-links "$@"
+#	fi
+#}
+
+## Other
+
+# Repeat last command (over and over) until succeeded
+#   usage: rebang
+rebang() {
+	cmd="$(fc -ln -1)";
+	while [ $? -ne 0 ]
+	do
+		eval "${cmd}"
+		sleep ${RANDOM:0:2}
+	done
+	unset cmd
 }

@@ -35,9 +35,9 @@ alias ll='ls -l' # Long list
 alias la='ls -A' # All, but . and ..
 
 # Long list, sort by time
-# Use "lsnew -nx" to list latest 'x' files
-alias ls_new='ls -rtl | tail'
-alias ls_old='ls -tl  | head'
+# Use "ls-new -nx" to list latest 'x' files
+alias ls-new='ls -rtl | tail'
+alias ls-old='ls -tl  | head'
 
 # List subdirectories
 alias ld='ls -d */'
@@ -65,6 +65,9 @@ alias diff='diff -uN'
 alias screen='screen -dRR'
 alias shred='shred -u' # Be careful!
 
+alias ipinfo='curl ipinfo.io/ip'
+alias download='curl -C - -O'
+
 # Case switch
 # Pure bash functions are preferable
 
@@ -73,6 +76,7 @@ alias shred='shred -u' # Be careful!
 
 # Mount world writable
 alias mount-rw='sudo mount -o rw,dmask=000,fmask=111,noatime'
+alias mount-smb1='sudo mount -t cifs -o "vers=1.0,dmask=000,fmask=000"'
 
 # Veracrypt
 alias vcrypt='sudo cryptsetup --veracrypt open --type tcrypt'

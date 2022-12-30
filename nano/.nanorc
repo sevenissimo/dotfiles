@@ -40,7 +40,7 @@ set atblanks
 set boldtext
 
 # Use the blank line below the titlebar as extra editing space
-set morespace
+#set morespace # Not working since Nano 5.8
 
 # Don't display the helpful shortcut lists at the bottom of the screen
 set nohelp
@@ -89,9 +89,6 @@ set historylog
 
 # Enable mouse support, if available
 #set mouse
-
-# Use line-by-line scrolling (default since 4.0)
-set smooth
 
 # Treat punctuation characters as parts of words.
 set wordbounds
@@ -156,7 +153,7 @@ bind ^V verbatim all
 # or insert it into the current one (insert/extcmd)
 # Ins → Ins : start insertion and toggle dest.buffer
 bind Ins flipnewbuffer insert
-bind Ins flipnewbuffer extcmd
+#bind Ins flipnewbuffer extcmd
 
 # Trim from cursor to begin/end of file
 bind  ^T cutrestoffile  all
