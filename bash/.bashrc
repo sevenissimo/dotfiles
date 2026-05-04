@@ -85,9 +85,11 @@ done
 
 # Most of Readline bindings happens on .inputrc
 # Except those that bind shell commands (-x)
+# https://www.gnu.org/software/bash/manual/bash.html#index-bind
 
 # ^G Displays manual of current editing command (C-g)
-bind -x '"\C-g":"man ${READLINE_LINE%% *}"'
+bind -x '"\C-g": "man ${READLINE_LINE%% *}"'
+bind    '"\eOP": "\C-g"'		# F1 as alias for C-g
 
 
 ## Host dependent .bashrc

@@ -60,13 +60,20 @@ chmod-files() {
 	find "${2:-.}" -type f -exec chmod "${1:-664}" {} \;
 }
 
+# Reset permissions on any subdirectories (775) and files (664)
+#   usage: chfix [DIR]
+chfix() {
+	chmod-dirs 775 "${1:-.}"
+	chmod-files 664 "${1:-.}"
+}
+
 # List unpaired files
 # Match 'foo.a' if there's no 'foo.b' in the same folder.
 #   usage: unpaired [EXT1 [EXT2]]
 unpaired() {
 	while read file; do
 		[[ -f "${file%.*}.${2:-jpg}" ]] || echo "$file"
-	done < <(find . -iname "*.${1:-avi}")
+	done < <(find . -iname "*.${1:-mkv}")
 }
 
 # Search for paragraph
@@ -80,7 +87,8 @@ skim() {
 ## Devel
 
 # Init Arch Linux package devel
-pkgbuild() {
+initpkg() {
+	take "${1:-.}"
 	cp -i /usr/share/pacman/PKGBUILD.proto "${1:-.}/PKGBUILD"
 }
 

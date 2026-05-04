@@ -6,6 +6,23 @@
 ### Live reload screenrc files with C-a C-r ###
 
 
+## Terminal Emulation
+
+# Enable modern TrueColor support
+truecolor on
+
+# Xterm compatibility for OpenCode TUI
+termcap xterm hs@:cs=\E[%i%d;%dr:im=\E[4h:ei=\E[4l
+terminfo xterm hs@:cs=\E[%i%p1%d;%p2%dr:im=\E[4h:ei=\E[4l
+termcapinfo xterm 'VR=\E[?5h:VN=\E[?5l'
+termcapinfo xterm 'vi=\E[?25l:ve=\E[?25h:vs=\E[?25l'
+termcapinfo xterm 'k1=\E[11~:k2=\E[12~:k3=\E[13~:k4=\E[14~'
+termcapinfo xterm 'kh=\EOH:kI=\E[2~:kD=\E[3~:kH=\EOF:kP=\E[5~:kN=\E[6~'
+termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
+# advertise hardstatus support to $TERMCAP
+termcapinfo  * '' 'hs:ts=\E_:fs=\E\\:ds=\E_\E\\'
+
+
 ## UI Elements
 
 # Window title (%t)
@@ -24,13 +41,13 @@ rendition so = wk   # dimmed colors
 ## Backticks
 
 # CPU load in percent (fallback)
-#backtick 1 10 10 sh -c "ps axo pcpu|awk '{s+=\$0}END{print s}'"
+backtick 1 10 10 sh -c "ps axo pcpu|awk '{s+=\$0}END{print s}'"
 
 # All-in-one
 # HWStat is an homebrew command to fetch system stats on BananaPi
 # Invoked with -ln option, it yelds output every 'n' sec.
 #   source: soon available on Github
-backtick 1 0 0 $HOME/.local/bin/hwstat -a -s"|" -l10
+#backtick 1 0 0 $HOME/.local/bin/hwstat -a -s"|" -l10
 
 ## Hardstatus
 
@@ -42,7 +59,8 @@ backtick 1 0 0 $HOME/.local/bin/hwstat -a -s"|" -l10
 # B. Minimalistic (active)
 #    Intended to co-operate with specific Bash prompt,
 #    list all windows as [# cmd:pwd] text, dimmed B/W, hwstat.
-hardstatus alwayslastline '%{= dw}%-w%{+s}%L>%n%{-} %h:%t%+w %=%1`%-6<|%c'
+#hardstatus alwayslastline '%{= dw}%-w%{+s}%L>%n%{-} %h:%t%+w %=%1`%-6<|%c'
+hardstatus alwayslastline '%?%E%{;#FFFFA0}> %:%{=u}@%H:%{-} %-w%{s}[%n %t]%{-}%+w %=%1` |%-6<%c%?'
 
 
 ## General
@@ -68,7 +86,7 @@ defscrollback 1024
 altscreen on
 
 # Set the format of time reported to message line
-time '%{=u}%H%{-}: %D %d %M %Y - %c:%s'
+#time '%{=u}%H%{-}: %D %d %M %Y - %c:%s'
 
 
 ## Idle / Lockscreen

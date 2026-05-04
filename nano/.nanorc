@@ -1,25 +1,26 @@
 #
 # ~/.nanorc
-# Personal configuration file for GNU nano
-# Tested on: GNU Nano version 4.8
+# Personal configuration file for GNU nano 8.0+.
+# For the complete list of options, please refer to 'man nanorc.5'
+# or see: https://www.nano-editor.org/dist/latest/nanorc.5.html
 #
 
 
 ## Editing
 
-# Use auto-indentation
+# Use auto-indentation (M-I to toggle)
 set autoindent
 
-# Use tabs, ever
+# Use tabs, ever (M-T to toggle)
 unset tabstospaces
 
 # Default tab size
 set tabsize 4
 
-# Make the Home key smarter
+# Make the Home key smarter (M-H to toggle)
 set smarthome
 
-# Use cut-from-cursor-to-end-of-line by default
+# Use cut-from-cursor-to-end-of-line (M-K to toggle)
 set cutfromcursor
 
 # Don't add newlines to the ends of files.
@@ -27,7 +28,7 @@ set cutfromcursor
 
 ## Line wrapping
 
-# Soft line wrapping (default 'nowrap' since 4.0)
+# Soft line wrapping (default 'nowrap', M-S to toggle)
 #set softwrap
 
 # Wrap lines at blank characters (tabs and spaces)
@@ -40,25 +41,40 @@ set atblanks
 set boldtext
 
 # Use the blank line below the titlebar as extra editing space
-#set morespace # Not working since Nano 5.8
+set emptyline
 
-# Don't display the helpful shortcut lists at the bottom of the screen
+# Hide commands palette at the bottom of the screen (M-X to toggle)
 set nohelp
 
-# Display line numbers to the left of the text area
+# Display line numbers to the left of the text area (M-N to toggle)
 set linenumbers
 
 # Draw a vertical stripe at the given column
 #set guidestripe 80
 
+# Display a "scrollbar" on the right
+set indicator
+
+# Minimal UI below edit area.
+set minibar
+
+# Some state flags on top-right or in minibar
+set stateflags
+
 # Color combinations for varius UI elements
-set titlecolor    white
-set numbercolor   brightblack
-set selectedcolor black,white
-set statuscolor   black,white
+# Syntax: [bold,][italic,]fgcolor,bgcolor
+#set titlecolor
+#set statuscolor
+set promptcolor bold,white,beet
+set numbercolor italic,sky
+set selectedcolor ,sky
+set spotlightcolor ,mint
 #set keycolor
 #set functioncolor
-#set stripecolor  ,black  # bg only
+#set errorcolor
+#set stripecolor ,black  # bg only
+set minicolor bold,,sky
+set scrollercolor gray
 
 
 ## Backups
@@ -74,11 +90,12 @@ set statuscolor   black,white
 
 
 ## Searches
+## Following toggle shortcuts are available on search menu.
 
-# Don't do case sensitive searches
+# Case unsensitive searches by default (M-C to toggle)
 unset casesensitive
 
-# Do extended regular expression searches by default
+# Extendend RegEx searches by default (M-R to toggle)
 #set regexp
 
 # Enable ~/.nano_history for saving and reading search/replace strings
@@ -87,15 +104,15 @@ set historylog
 
 ## Extras
 
-# Enable mouse support, if available
-#set mouse
+# Enable mouse support, if available (M-M to toggle)
+set mouse
 
 # Treat punctuation characters as parts of words.
 set wordbounds
 
 # Multi-files editing.
-# Open new file with ^O, navigate through files with:
-#   M ← (M-,)	M → (M-.))
+#	Navigate through buffers with:
+#	M ← (or M-<)	M → (or M->))
 set multibuffer
 
 # Let Backspace or Delete erase the marked region
@@ -117,62 +134,81 @@ set zap
 
 
 # Open/save (with prompt)
-bind ^O insert   all
-bind ^S writeout all
-
-# Undo/redo
-bind M-- undo all
-bind M-_ redo all
-bind  ^Z undo all # Don't break the habits
-bind M-Z redo all # Ctrl-Sh-Z would be better
-
-# Cut/paste (kill/yank)
-bind  ^Y paste all        # yank!
-bind  ^U "a[1~" all # kill backward
-bind M-D "" all       # kill whole line
-bind M-Z "[3;3~" all  # delete whole line*
-#bind M-6 copytext all     # copy marked text
+bind  ^O insert   all
+bind  ^S writeout all
 
 # Search/replace
-bind  ^R replace all
-bind M-R regexp  all
+# Since Nano 8.0 ^F is default for forward search, ^B for backward search.
+#   M-F for next match and M-B for previous match. ^B is rebinded later.
+#   On search menu M-R toggle regex search, M-C case sensitive search.
+bind  ^R replace main
+
+# Undo/redo
+# Default (and fallback) are: M-U to undo and M-E to redo
+bind   ^Z undo all  # Don't break the (bad) habits
+#bind M-Z redo all  # Ctrl-Sh-Z would be better (see NOTE #1)
+
+# Cut/paste (kill/yank)
+# ^K to kill is default and consistent with Bash Readline
+bind  ^Y paste all           # yank!
+bind  ^U "A[1~" all    # kill backward, use ^A set-mark
+bind  ^C copy main           # copy. DO NOT BIND to menu 'all'
+unbind M-6 all               # copy... but why?
+bind  ^W "[1;5CA[1;5D" all  # kill prev. word (chopwordleft delete!)
+bind M-D "[1;5DA[1;5C" all  # kill next word (chopwordright delete!)
 
 # Autocompletion! O____O
 bind ^Space complete all
 
 # Jump to matching bracket
-bind ^B findbracket all
-
-# Goto
-#bind M-G gotoline all
+bind  ^B findbracket all
 
 # Verbatim as in Bash Readline
-bind ^V verbatim all
+bind  ^V verbatim all  # default is: M-V
 
-# Toggles whether read file into a new empty buffer
-# or insert it into the current one (insert/extcmd)
+# Toggles whether load file into a new empty buffer
+# or insert it into the current one (insert/execute)
 # Ins → Ins : start insertion and toggle dest.buffer
 bind Ins flipnewbuffer insert
-#bind Ins flipnewbuffer extcmd
+bind Ins flipnewbuffer execute
+bind Ins flipreplace search
+bind Ins flipreplace replace
 
 # Trim from cursor to begin/end of file
-bind  ^T cutrestoffile  all
-bind M-T "a[1;5H" all
+#bind  ^T cutrestoffile  all
+#bind M-T "a[1;5H" all
+unbind M-T all
 
-# Move a-word-a-time
-bind M-B prevword all # [1;3D
-bind M-F nextword all # [1;3C
+# ^T Prompts for a program to execute.
+# If the command starts with "|", pipe buffer or region to the command
 
-# Comment, count, quote
-bind M-/ comment   all
-bind M-C wordcount all
-bind M-" """[D"  all
+# Upper/lower case line or region
+#bind M-U "F|tr '[:lower:]' '[:upper:]'" main
+#bind M-L "F|tr '[:upper:]' '[:lower:]'" main
+
+# Move curson a-word-a-time
+# Since Nano 8.0 M-F M-B are default for next/prev search match
+#bind M-B prevword all
+#bind M-F nextword all
+
+# 'Magic quotes', toggle comment
+bind M-" """[D" all
+bind  ^Q "[1;5D"[1;5C"[D" all
+bind M-\ comment all
+unbind M-3 all
+
+# Mark as in Bash Readline
+bind M-@ mark all   # default is: M-A
+
+# Show/Hide UI elements
+bind M-? nohelp all     # default is: M-X
+bind M-W wordcount all  # default was: ^C (rebinded)
 
 # Remap some Fn keys
-bind F2 writeout all
-bind F3 savefile all
-bind F4 exit     all
-bind F5 refresh  all
+#bind F2 writeout all
+#bind F3 savefile all
+#bind F4 exit     all
+#bind F5 refresh  all
 
 
 ## Syntax highlight

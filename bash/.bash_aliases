@@ -50,23 +50,25 @@ alias ds='du -sh'
 ## Colors!
 
 # Show matches in color
-alias grep='grep --color=auto'
+alias grep='grep --color=always'
+
+alias diff='diff -u --color=always'
+alias sdiff='\diff -y --color=always'
 
 # Use colors on GNU Less
-# Option moved into ~/.less
-#alias less='less -R'
+alias less='less -R' # also in ~/.less
 
 
 ## Personal shortcuts and one-liners
 
 alias copy='rsync -rsvP'
-alias diff='diff -uN'
+#alias diff='diff -u' # unified output format
 
 alias screen='screen -dRR'
 alias shred='shred -u' # Be careful!
 
 alias ipinfo='curl ipinfo.io/ip'
-alias download='curl -C - -O'
+alias dl='curl -C - -O'
 
 # Case switch
 # Pure bash functions are preferable
@@ -81,3 +83,9 @@ alias mount-smb1='sudo mount -t cifs -o "vers=1.0,dmask=000,fmask=000"'
 # Veracrypt
 alias vcrypt='sudo cryptsetup --veracrypt open --type tcrypt'
 alias vcrypt-hidden='sudo cryptsetup --veracrypt --tcrypt-hidden open --type tcrypt'
+
+
+## Service management (SystemD)
+
+# Home-Assistant
+alias runhass='systemd-run --uid=$(id -u hass) --gid=$(id -g hass) /usr/bin/python -m venv /var/lib/hass/.venv &&'

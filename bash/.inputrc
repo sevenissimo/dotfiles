@@ -5,102 +5,144 @@
 
 ### Live reload inputrc files with C-x C-r ###
 
-
-# Set various bindings for emacs mode.
+# Set various bindings for emacs mode (default)
 $if mode=emacs
 
-	# PgUp/PgDown search on the history
+	# ^◂ / ^▸	move point one-word-a-time
+	# Default M-◂ and M-▸ are used to VT switching on Arch
+	"\e[1;5D": backward-word
+	"\e[1;5C": forward-word
+
+	# PgUp / PgDn	search on the history
 	"\e[5~": history-search-backward
 	"\e[6~": history-search-forward
 
-	# Ctrl-Up/Down to navigate history
+	# ^▴ / ^▾	seek history to begin/end
 	"\e[1;5A": beginning-of-history
 	"\e[1;5B": end-of-history
 
-	"\e[O5A": beginning-of-history
-	"\e[O5B": end-of-history
-
-	# Ins: toggle overwrite mode
+	# Ins	toggle overwrite mode
 	"\e[2~": overwrite-mode
 
 $endif
 
-
-# Convenient settings for shell interaction
+# Settings for Bash shell
 $if Bash
 
-	# use a visible bell if one is available
+	# Readline current settings could be viewed with: bind -v
+	#
+	# The list of default Bash settings could be found at:
+	# https://www.gnu.org/software/bash/manual/html_node/Readline-Init-File-Syntax.html
+	#
+
+	# Use a visible bell (if available)
 	set bell-style visible
+
+	# Time to insert complex keysequence
+	#set keyseq-timeout 1500
+
+
+	## Completion
+
+	# A single tab partially complete the word _and_ show
+	# all possible completions if it is still ambiguous
+	set show-all-if-ambiguous on
+
+	# Attemp completion without duplicate end of word
+	# 'Make|file [TAB]' result in 'Makefile' not 'Makefilefile'
+	set skip-completed-text on
 
 	# Horizontally sorted completion matches
 	set print-completions-horizontally on
 
-	# Filename completion/expansion
+	# Completion ignore case and treats '-' and '_' the same
 	set completion-ignore-case on
-	set show-all-if-ambiguous on
-	set show-all-if-unmodified on
+	set completion-map-case on
 
-	# Windows(TM) completion style
-	#TAB: menu-complete
+	# Don't expand homedir paths
+	#set expand-tilde off			# default: off
 
-	# Don't expand homedir name
-	set expand-tilde off
-
-	# Append "/" to all dirnames
-	set mark-directories on
+	# Append '/' to all completed dir (and symlinked too)
+	#set mark-directories on		# default: on
 	set mark-symlinked-directories on
 
-	# Show stat on complete
+	# Show stat on completion
 	set visible-stats on
 
-	# Enable coloring for tab completions with bash >= 4.3
+	# Show hidden files only after '.' completion
+	set match-hidden-files off
+
+	## Colors
+
+	# Enable coloring for completion menu
+	# Color are taken from LS_COLORS
+	set colored-stats on
+
+	# Display completion matches common prefix in color
+	# Use 'readline-colored-completion-prefix' from LS_COLORS
 	#set colored-completion-prefix on
-	#set colored-stats on
+
+	## ...and Unicors!
 
 	# 'Magic Space'
-	# Insert a space character then performs
+	# Every space character then performs
 	# a history expansion in the line
 	Space: magic-space
 
 
 	## Bindings
-	
-	# 'Magic Quotes' (Alt-")
-	# Insert open and close double quotes
-	# and move to just after the open quote
+
+	# Readline current bindings could be viewed with: bind -p
+	#
+	# The list of Bash functions and default bindings could be found at:
+	# https://www.gnu.org/software/bash/manual/html_node/Function-Index.html
+
+	# M-"	Smart quotes
+	# Insert double quotes pair, put cursor in between
 	"\e\"": "\"\"\C-b"
 
-	# Quote the current or previous word
-	"\C-xq": "\eb\"\ef\"\C-b"
+	# ^Q	^X Q	Quote the current or previous word
+	# 'ls ./path/to [Ctrl+Q]' result in 'ls "./path/to "'
+	"\C-xq": "\e\C-b\"\e\C-f\"\C-b"
+	"\C-x\"": "\C-xq"
 	"\C-q": "\C-xq"   # need stty -ixoff
 
-
 	# Other bindings to workaround issues with IT kbd layout
+	# M-@	set-mark		in place of ^@ that doesn't work!
+	"\e@": set-mark
+
+	# M-\	insert-comment	in place of M-# that doesn't work
+	# Note: 'Esc' then '#' could be used instead
+	"\e\\": insert-comment
+
 	# Try to uniform to GNU Nano keybindings...
-	"\e-": undo
-	"\e.": set-mark
-	"\e/": insert-comment
 
+	## Kill and copy
+	#  ^K				kill-line			(cut from point to EOL)
+	#  ^U				unix-line-discard	(cut from point to begin of line)
+	#  ^W	(M-Bksp)	unix-word-rubout	(cut one command argument backward)
 
-	# Try to mimic GNU Nano behaviour...
-	"\e[3;5~": kill-word        # Ctrl-Del:    del word right
-	"\e[3;6~": unix-word-rubout # Ctrl-Sh-Del: del word left
-	"\e[3;3~": "\C-a\C-k"       # Alt-Del:     del whole line
+	# ^Del	(M-D)		kill-word			(cut one word forward)
+	#"\e[3;5~": kill-word
 
-	#"\e": kill-word
-	#"": unix-word-rubout   # Ctrl-Sh-Del: del word left
-	#"\ed": "\C-a\C-k"
+	# M-Del				kill-whole-line		(cut whole line wherever point is)
+	#"\e[3;3~": kill-whole-line
 
-	
-	# Copy word to kill buffer
+	# ^X ^K / ^X ^W		copy-*-word			(copy one word to kill buffer)
 	"\C-x\C-k": copy-forward-word
 	"\C-x\C-w": copy-backward-word
 
-	# Other
+	## Other
+
+	# ^J	(macro)	accept line, output to pager
+	"\C-j": "\C-e | $PAGER\C-m"
+
+	# ^X ?  sequences
 	"\C-xl": "\C-e | less"
 	"\C-xg": "\C-e | grep ''\C-b"
 
-	# Fn keys
+	## Fn keys
+
 	"\e[15~": clear-screen  # F5
 
 $endif

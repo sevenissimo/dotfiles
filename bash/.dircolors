@@ -3,10 +3,10 @@
 #
 # User configuration file for dircolors(1) utility.
 # To output command to set LS_COLORS variable use:
-# $ /usr/bin/dircolors [OPTIONS] THIS_FILE
+# /usr/bin/dircolors [OPTIONS] THIS_FILE
 
 ## This file is generated through dircolors.gen ##
-##   source:                                    ##
+## https://github.com/sevenissimo/dircolors-gen ##
 
 
 ## TERM Section
@@ -130,6 +130,7 @@ EXEC 0 # Disabled because of FAT/NTFS mess
 .xz    30;43
 .z     30;43
 .zip   30;43
+.zst   30;43
 
 
 # Text formats
@@ -137,6 +138,7 @@ EXEC 0 # Disabled because of FAT/NTFS mess
 .TXT   0
 .org   0
 .md    0
+.MD    0
 .mkd   0
 
 
@@ -174,6 +176,8 @@ EXEC 0 # Disabled because of FAT/NTFS mess
 .ini   33
 .INI   33
 .pacnew 33
+.yaml  33
+.yml   33
 
 
 # Images
